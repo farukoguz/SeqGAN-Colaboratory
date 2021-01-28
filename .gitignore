@@ -1,5 +1,3 @@
-/save/*.txt
-/figure/*
 __pycache__
 *.pyc
 *~
