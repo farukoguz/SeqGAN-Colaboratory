@@ -39,9 +39,9 @@ dis_batch_size = 64
 #  Basic Training Parameters
 #########################################################################################
 TOTAL_BATCH = 200 
-positive_file = 'save/gan_train.txt'
-negative_file = 'save/gan_fake.txt'
-eval_file = 'save/gan_test.txt'
+positive_file = 'data/gan_train.txt' # must be provided
+negative_file = 'data/gan_fake.txt' # auto generated
+eval_file = 'data/gan_test.txt' # auto generated
 generated_num = 10000
 
 def main():
@@ -64,13 +64,13 @@ def main():
     gen_dataset = dataset_for_generator(positive_file, BATCH_SIZE)
     log = open('save/experiment-log.txt', 'w')
     #  pre-train generator
-    if not os.path.exists("generator_pretrained.h5"):
+    if not os.path.exists("save/generator_pretrained.h5"):
         print('Start pre-training...')
         log.write('pre-training...\n')
         generator.pretrain(gen_dataset, target_lstm, PRE_EPOCH_NUM, generated_num // BATCH_SIZE, eval_file)
-        generator.save("generator_pretrained.h5")
+        generator.save("save/generator_pretrained.h5")
     else:
-        generator.load("generator_pretrained.h5")
+        generator.load("save/generator_pretrained.h5")
 
     if not os.path.exists("discriminator_pretrained.h5"):
         print('Start pre-training discriminator...')
@@ -80,9 +80,9 @@ def main():
             generator.generate_samples(generated_num // BATCH_SIZE, negative_file)
             dis_dataset = dataset_for_discriminator(positive_file, negative_file, BATCH_SIZE)
             discriminator.train(dis_dataset, 3, (generated_num // BATCH_SIZE) * 2)
-        discriminator.save("discriminator_pretrained.h5")
+        discriminator.save("save/discriminator_pretrained.h5")
     else:
-        discriminator.load("discriminator_pretrained.h5")
+        discriminator.load("save/discriminator_pretrained.h5")
 
     rollout = ROLLOUT(generator, 0.8)
 
