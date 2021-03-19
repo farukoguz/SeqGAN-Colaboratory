@@ -39,7 +39,7 @@ dis_batch_size = 64
 #  Basic Training Parameters
 #########################################################################################
 TOTAL_BATCH = 200 
-positive_file = 'data/gan_train.txt' # must be provided
+positive_file = 'data/gan_train1.txt' # must be provided
 negative_file = 'data/gan_fake.txt' # auto generated
 eval_file = 'data/gan_test.txt' # auto generated
 generated_num = 10000
