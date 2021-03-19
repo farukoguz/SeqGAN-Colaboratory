@@ -20,7 +20,7 @@ EMB_DIM = 32 # embedding dimension
 HIDDEN_DIM = 32 # hidden state dimension of lstm cell
 SEQ_LENGTH = 16 # sequence length
 START_TOKEN = 0
-PRE_EPOCH_NUM = 3 # supervise (maximum likelihood estimation) epochs
+PRE_EPOCH_NUM = 120 # supervise (maximum likelihood estimation) epochs
 SEED = 88
 BATCH_SIZE = 64
 VOCAB_SIZE = 5000
@@ -75,7 +75,7 @@ def main():
     if not os.path.exists("discriminator_pretrained.h5"):
         print('Start pre-training discriminator...')
         # Train 3 epoch on the generated data and do this for 50 times
-        for _ in range(5):
+        for _ in range(50):
             print("Dataset", _)
             generator.generate_samples(generated_num // BATCH_SIZE, negative_file)
             dis_dataset = dataset_for_discriminator(positive_file, negative_file, BATCH_SIZE)
